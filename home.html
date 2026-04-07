@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+
+.hero-section{
+    background: linear-gradient(135deg,#6a11cb,#2575fc);
+    color:white;
+    padding:80px 20px;
+    border-radius:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+.hero-title{
+    font-size:42px;
+    font-weight:bold;
+}
+
+.hero-sub{
+    font-size:18px;
+    opacity:0.9;
+}
+
+.main-btn{
+    padding:12px 28px;
+    font-size:18px;
+    border-radius:30px;
+    transition:0.3s;
+}
+
+.main-btn:hover{
+    transform:scale(1.05);
+}
+
+.feature-card{
+    border:none;
+    border-radius:15px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.feature-card:hover{
+    transform:translateY(-8px);
+}
+
+.feature-icon{
+    font-size:40px;
+}
+
+</style>
+
+
+<div class="container mt-4">
+
+    <!-- HERO SECTION -->
+
+    <div class="hero-section text-center">
+
+        <h1 class="hero-title">📝 Handwritten Text Analysis System</h1>
+
+        <p class="hero-sub mt-3">
+            Upload handwritten answers and automatically extract text,
+            correct grammar, generate structured paragraphs, and evaluate answers
+            using AI-powered similarity scoring.
+        </p>
+
+        <div class="mt-4">
+
+            <a href="{{ url_for('login') }}" class="btn btn-light main-btn me-3">
+                🔐 Login
+            </a>
+
+            <a href="{{ url_for('register') }}" class="btn btn-warning main-btn">
+                🧑‍💻 Register
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FEATURES -->
+
+    <div class="row mt-5 text-center">
+
+        <h3 class="mb-4">✨ System Features</h3>
+
+        <div class="col-md-4">
+            <div class="card feature-card p-4">
+                <div class="feature-icon">📷</div>
+                <h5 class="mt-3">Handwritten OCR</h5>
+                <p>Extract handwritten text using EasyOCR with high accuracy.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card feature-card p-4">
+                <div class="feature-icon">🧠</div>
+                <h5 class="mt-3">AI Paragraph Structuring</h5>
+                <p>LLM automatically restructures text into a meaningful paragraph.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card feature-card p-4">
+                <div class="feature-icon">📊</div>
+                <h5 class="mt-3">Automatic Evaluation</h5>
+                <p>Cosine similarity, partial matching, and AI scoring.</p>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- IMAGE SECTION -->
+
+    <div class="row mt-5 align-items-center">
+
+        <div class="col-md-6 text-center">
+            <img src="https://cdn-icons-png.flaticon.com/512/942/942748.png"
+                 style="width:70%">
+        </div>
+
+        <div class="col-md-6">
+
+            <h3>🚀 Smart Answer Evaluation</h3>
+
+            <p>
+                This intelligent system helps teachers and institutions
+                automatically evaluate handwritten answers using advanced
+                OCR, Natural Language Processing, and Large Language Models.
+            </p>
+
+            <ul>
+                <li>✔ Extract handwritten answers</li>
+                <li>✔ Correct spelling & grammar</li>
+                <li>✔ Generate structured paragraphs</li>
+                <li>✔ Assign automated scores</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

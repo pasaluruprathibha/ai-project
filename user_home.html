@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+
+.dashboard-card{
+    border:none;
+    border-radius:18px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.12);
+    padding:40px;
+}
+
+.upload-box{
+    border:2px dashed #6c63ff;
+    border-radius:15px;
+    padding:40px;
+    text-align:center;
+    cursor:pointer;
+    transition:0.3s;
+    background:#f8f9ff;
+}
+
+.upload-box:hover{
+    background:#eef0ff;
+    transform:scale(1.02);
+}
+
+.upload-icon{
+    font-size:50px;
+    color:#6c63ff;
+}
+
+.upload-btn{
+    padding:12px 30px;
+    font-size:18px;
+    border-radius:30px;
+    transition:0.3s;
+}
+
+.upload-btn:hover{
+    transform:scale(1.05);
+}
+
+.preview-img{
+    margin-top:20px;
+    max-width:250px;
+    border-radius:10px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+</style>
+
+
+<div class="container">
+
+<div class="dashboard-card">
+
+<!-- Welcome -->
+
+<div class="text-center mb-4">
+
+<h2>👋 Hello, {{ session.username }}</h2>
+
+<p class="text-muted">
+Upload your handwritten answer sheet and let our AI system
+extract text, correct grammar, structure paragraphs,
+and automatically evaluate the answer.
+</p>
+
+</div>
+
+
+<!-- Upload Section -->
+
+<form method="POST" enctype="multipart/form-data">
+
+<div class="upload-box" onclick="document.getElementById('fileInput').click()">
+
+<div class="upload-icon">📄</div>
+
+<h5 class="mt-3">Drag & Drop or Click to Upload</h5>
+
+<p class="text-muted">Supported formats: JPG, PNG, JPEG</p>
+
+<input type="file"
+       id="fileInput"
+       name="image"
+       accept="image/*"
+       hidden
+       onchange="previewImage(event)"
+       required>
+
+</div>
+
+
+<!-- Image Preview -->
+
+<div class="text-center">
+<img id="preview" class="preview-img" style="display:none;">
+</div>
+
+
+<!-- Upload Button -->
+
+<div class="text-center mt-4">
+
+<button type="submit" class="btn btn-primary upload-btn">
+🚀 Analyze Handwriting
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+function previewImage(event){
+
+var reader = new FileReader();
+
+reader.onload = function(){
+
+var output = document.getElementById('preview');
+
+output.src = reader.result;
+
+output.style.display = "block";
+
+}
+
+reader.readAsDataURL(event.target.files[0]);
+
+}
+
+</script>
+
+{% endblock %}

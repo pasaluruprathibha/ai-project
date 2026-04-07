@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+.result-card{
+border:none;
+border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+padding:25px;
+margin-bottom:20px;
+}
+
+.score-box{
+background:#f8f9ff;
+padding:20px;
+border-radius:12px;
+margin-bottom:15px;
+}
+
+.progress{
+height:18px;
+border-radius:10px;
+}
+
+.text-box{
+background:#fafafa;
+padding:15px;
+border-radius:10px;
+border-left:4px solid #6a11cb;
+max-height:200px;
+overflow:auto;
+}
+
+.final-score{
+font-size:28px;
+font-weight:bold;
+color:#2575fc;
+}
+
+</style>
+
+
+<div class="container">
+
+<h2 class="mb-4 text-center">📊 Handwriting Analysis Results</h2>
+
+<div class="row">
+
+<!-- LEFT SIDE GRAPH -->
+
+<div class="col-md-5">
+
+<div class="result-card">
+
+<h4 class="text-center mb-3">📈 Score Visualization</h4>
+
+<canvas id="scoreChart"></canvas>
+
+</div>
+
+</div>
+
+
+<!-- RIGHT SIDE RESULTS -->
+
+<div class="col-md-7">
+
+<!-- Final Score -->
+
+<div class="result-card text-center">
+
+<h4>🏆 Final Evaluation Score</h4>
+
+<div class="final-score">
+{{ (final_score*10)|round(2) }} / 10
+</div>
+
+</div>
+
+
+<!-- Score Bars -->
+
+<div class="result-card">
+
+<h5 class="mb-3">📊 Score Breakdown</h5>
+
+<div class="score-box">
+
+Cosine Similarity
+
+<div class="progress mt-2">
+<div class="progress-bar bg-primary"
+style="width: {{ similarity_score*100 }}%">
+{{ similarity_score|round(2) }}
+</div>
+</div>
+
+</div>
+
+
+<div class="score-box">
+
+Partial Matching
+
+<div class="progress mt-2">
+<div class="progress-bar bg-success"
+style="width: {{ partial_score*100 }}%">
+{{ partial_score|round(2) }}
+</div>
+</div>
+
+</div>
+
+
+<div class="score-box">
+
+LLM Score
+
+<div class="progress mt-2">
+<div class="progress-bar bg-warning"
+style="width: {{ llm_score*10 }}%">
+{{ llm_score }}
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- Text Results -->
+
+<div class="result-card">
+
+<h5>📄 Raw OCR Text</h5>
+
+<div class="text-box">
+{{ raw_text }}
+</div>
+
+</div>
+
+
+<div class="result-card">
+
+<h5>✏ Corrected Text</h5>
+
+<div class="text-box">
+{{ corrected_text }}
+</div>
+
+</div>
+
+
+<div class="result-card">
+
+<h5>🧠 Structured Paragraph</h5>
+
+<div class="text-box">
+{{ structured_paragraph }}
+</div>
+
+</div>
+
+
+<div class="text-center mt-3">
+
+<a href="{{ url_for('user_home') }}" class="btn btn-primary">
+⬅ Analyze Another Image
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+var ctx = document.getElementById('scoreChart').getContext('2d');
+
+var chart = new Chart(ctx, {
+
+type: 'bar',
+
+data: {
+
+labels: ['Cosine Similarity','Partial Match','LLM Score','Final Score'],
+
+datasets: [{
+
+label: 'Score',
+
+data: [
+
+{{ similarity_score*10 }},
+
+{{ partial_score*10 }},
+
+{{ llm_score }},
+
+{{ final_score*10 }}
+
+],
+
+backgroundColor: [
+
+'#4e73df',
+
+'#1cc88a',
+
+'#f6c23e',
+
+'#36b9cc'
+
+]
+
+}]
+
+},
+
+options: {
+
+responsive:true,
+
+plugins:{
+legend:{display:false}
+},
+
+scales:{
+
+y:{
+beginAtZero:true,
+max:10
+}
+
+}
+
+}
+
+});
+
+</script>
+
+{% endblock %}
